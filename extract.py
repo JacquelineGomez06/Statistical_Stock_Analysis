@@ -1,9 +1,7 @@
-#import key from config
-#URL that gets open and close price for ABNB 4/1/2021
 from config import key
 import requests as req
 import time
-
+import csv
 #loop through stocks,request data,import results as json
 stocks=["DAL","ABNB","MAR","HTZ","RCL"]
 for stock in stocks:
@@ -11,26 +9,25 @@ for stock in stocks:
     data=req.get(url)
     json_data=data.json()
     results=json_data["results"]
-#loop results to get closing prices with dates
+    #loop results to get closing prices with dates
     stock_data=[]
     for day in results:
         c_price=day["c"]
         t_price=day["t"]
-        real_time=time.strftime('%Y-%m-%d',time.localtime(closing["t"]/1000))
-        
-
-    #create a dictionary of real_time and c_price
-    price_time={
+        real_time=time.strftime('%Y-%m-%d',time.localtime(t_price/1000))
+        #create a dictionary of real_time and c_price
+        stock_dict={
         'date':real_time, 
         'closing_price':c_price
-    }
-    #append dict to stock_data
-    stock_data.append(price_time)
+        }
+        #append dict to stock_data
+        stock_data.append(stock_dict)
 
-with open(f"{stock}.csv","w",newLine='') as outfile:
-    writer=csv.DictWriter(outfile,fieldnames=["Date","Closing_Price"])
-    writer.writeheader()
-    for row in stock_data:
-        writer.writerow(row)
 
-        
+    with open(f"{stock}.csv","w",newline='') as outfile:
+        writer=csv.DictWriter(outfile,fieldnames=["date","closing_price"])
+        writer.writeheader()
+        for row in stock_data:
+            writer.writerow(row)
+
+
