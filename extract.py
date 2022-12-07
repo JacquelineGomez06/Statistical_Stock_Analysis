@@ -2,6 +2,7 @@ from config import key
 import requests as req
 import time
 import csv
+
 #loop through stocks,request data,import results as json
 stocks=["DAL","ABNB","MAR","HTZ","RCL"]
 for stock in stocks:
@@ -23,7 +24,7 @@ for stock in stocks:
         #append dict to stock_data
         stock_data.append(stock_dict)
 
-
+    #convert stock data into 5 different csv's
     with open(f"{stock}.csv","w",newline='') as outfile:
         writer=csv.DictWriter(outfile,fieldnames=["date","closing_price"])
         writer.writeheader()
