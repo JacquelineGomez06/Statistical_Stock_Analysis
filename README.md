@@ -1,4 +1,4 @@
-# Project1
+# Statistical Stock Analysis
 
 An analysis of 5 travel stocks from API data, March 29,2021 to March 25,2022.
 Calculated weekly population standard deviation as a measure of volatility and plotted using Python packages statistics and matplotlib.
